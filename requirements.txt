@@ -1,14 +1,6 @@
 async-timeout==3.0.1
 asyncio==3.4.3
-command-not-found==0.3
 discord==1.7.3
 discord.py==1.7.3
-distro==1.4.0
-distro-info===0.23ubuntu1
 openpyxl==3.0.7
-pyOpenSSL==19.0.0
-python-apt==2.0.0+ubuntu0.20.4.5
-python-debian===0.1.36ubuntu1
-pytz==2021.1
-simplejson==3.16.0
-systemd-python==234
+youtube-dl==2021.6.6
