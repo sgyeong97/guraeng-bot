@@ -23,6 +23,10 @@ async def on_ready():
     print("Guraeng-bot run")
     print("Ready")
 
+@bot.command()
+async def help():
+    await ctx.send("개발중이라 도울 수 없-다")
+
 @bot.command(aliases=["down"])
 async def sleep(ctx):
     print("command_sleep")
