@@ -1,0 +1,9 @@
+discord.py
+itertools
+asyncio
+configparser
+os
+embed_colors
+sys
+pytz
+datetime
