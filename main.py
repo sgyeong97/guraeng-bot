@@ -3,12 +3,6 @@ from dice import *
 from discord.ext import commands, tasks
 from itertools import cycle
 #키워드 알림기에 필요한 것 import
-import configparser
-import os
-import embed_colors
-import sys
-from pytz import timezone
-from datetime import datetime
 
 prefix = "#"
 bot = commands.Bot(command_prefix = prefix)
