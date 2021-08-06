@@ -61,7 +61,7 @@ async def change_prefix(ctx, new_prefix=None):
         prefixes = json.load(f)
         prefixes[str(ctx.guild.id)] = prefix
     with open(f'{./prefixes.json', 'w') as f:
-        json.dump(prefixes, f, indent=' ')
+        json.dump(prefixes, f, indent='\t')
     await ctx.send(f"{new_prefix}로 변경되었습니다.")
 #접두사 초기화
 @bot.command(name="접두사_초기화")
@@ -77,7 +77,7 @@ async def change_prefix(ctx):
     prefixes.pop(ctx.guild.id)
 
     with open(f'./prefixes.json', 'w') as f:
-        json.dump(prefixes, f, indent=' ')
+        json.dump(prefixes, f, indent='\t')
 
     await ctx.send("접두사 '#'로 초기화 완료")
 
