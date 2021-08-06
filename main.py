@@ -51,10 +51,11 @@ async def getup(ctx):
 async def notice(ctx):
     print("send server notice url")
     guild_name = ctx.guild.name
-    guild_icon = ctx.guild.icon
-    print(guild_name, guild_icon)
-    embed=discord.Embed(description=guild_name, color=0xFF5733)
-    embed.set_image(url=guild_icon)
+    guild_icon = ctx.guild.icon_url
+    embed=discord.Embed(description=":star2: 서버 규칙 :star2:", color=0xFF5733)
+    embed.set_author(name=guild_name, url=notice_path)
+    embed.set_thumbnail(url=guild_icon)
+    embed.set_footer(text="위에 있는 서버 이름을 누르면 연결됩니다.\n자세한 내용은 서버 규칙 채널 확인 해주세요!")
     await ctx.send(embed=embed)
     
 @bot.command(aliases=["hi"])
