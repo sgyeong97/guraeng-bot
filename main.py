@@ -10,6 +10,7 @@ dream = cycle(["꿈나라 여행-", "잠은 잘 자야해", "잘자고 일어나
 work = cycle(["구랭 굴러다니며 활동","데굴데굴","공과 물아일체"])
 notice_path = "https://gurae.notion.site/5c9c7fb8ba7d482786cf3f59f85d04d6"
 
+
 def get_prefix(bot, message):
     with open(f'prefixes.json', "r") as f:
         prefixes = json.load(f)
@@ -49,7 +50,11 @@ async def getup(ctx):
 @bot.command(aliases=["규칙"])
 async def notice(ctx):
     print("send server notice url")
-    embed = discord.Embed(title="서버 규칙", url=notice_path, description="으른의 소꿉놀이단 서버에서 놀기 위해 기본적으로 지켜야하는 규칙이 정리되어있는 법전", color=0xFF5733)
+    guild_name = ctx.guild.name
+    guild_icon = ctx.guild.icon
+    print(guild_name, guild_icon)
+    embed=discord.Embed(description=guild_name, color=0xFF5733)
+    embed.set_image(url=guild_icon)
     await ctx.send(embed=embed)
     
 @bot.command(aliases=["hi"])
