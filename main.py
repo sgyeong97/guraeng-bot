@@ -1,4 +1,6 @@
 import asyncio, discord
+import json
+import os
 from dice import *
 from discord.ext import commands, tasks
 from itertools import cycle
@@ -8,10 +10,11 @@ dream = cycle(["꿈나라 여행-", "잠은 잘 자야해", "잘자고 일어나
 work = cycle(["구랭 굴러다니며 활동","데굴데굴","공과 물아일체"])
 
 def get_prefix(bot, message):
-    with open(f'{./prefixes.json', "r") as f:
+    with open(f'prefixes.json', "r") as f:
         prefixes = json.load(f)
+
     if str(message.guild.id) not in prefixes:
-        return commands.when_mentioned_or('#')(bot, message)
+        return commands.when_mentioned_or('.')(bot, message)
 
     prefix = prefixes[str(message.guild.id)]
     return commands.when_mentioned_or(prefix)(bot, message)
@@ -49,34 +52,41 @@ async def hello(ctx):
     await ctx.send("hello")
 
 #명령어 접두사 변경
-@bot.command(name="접두사")
+@bot.command(name="repre")
 async def change_prefix(ctx, new_prefix=None):
+    print("change_prefix")
+
     if not ctx.guild:
         await ctx.send("DM기능 미지원")
         return
+
     if new_prefix is None:
         await ctx.send("공백은 지원하지 않습니다.")
         return
-    with open(f'./prefixes.json','r') as f:
+
+    with open(f'prefixes.json','r') as f:
         prefixes = json.load(f)
         prefixes[str(ctx.guild.id)] = prefix
-    with open(f'{./prefixes.json', 'w') as f:
+
+    with open(f'prefixes.json', 'w') as f:
         json.dump(prefixes, f, indent='\t')
+
     await ctx.send(f"{new_prefix}로 변경되었습니다.")
 #접두사 초기화
-@bot.command(name="접두사_초기화")
+@bot.command(name="oripre")
 async def change_prefix(ctx):
+    print("ini prefixe")
     if not ctx.guild:
         await ctx.send("DM기능 미지원")
         return
-    with open(f'./prefixes.json', 'r') as f:
+    with open(f'prefixes.json', 'r') as f:
         prefixes = json.load(f)
     if str(ctx.guild.id) not in prefixes:
         await ctx.send("초기의 # 접두사 그대로 입니다.")
         return
     prefixes.pop(ctx.guild.id)
 
-    with open(f'./prefixes.json', 'w') as f:
+    with open(f'prefixes.json', 'w') as f:
         json.dump(prefixes, f, indent='\t')
 
     await ctx.send("접두사 '#'로 초기화 완료")
@@ -99,20 +109,10 @@ async def dice(ctx):
     await ctx.send(dice())
     print("dice roll")
 
-@bot.command()
-async def command(ctx, *, text = None):
-    print("command")
-    if(text != None):
-        await ctx.send("접두사를 %s로 바꿀게!"%text)
-        prefix = text
-        bot = commands.Bot(command_prefix = prefix)
-    else:
-        await ctx.send("command 뒤에 바꾸길 원하는 접두사를 붙여줘")
-
 @bot.event
 async def on_command_error(ctx, error):
-    print("on_command_error")
     if isinstance(error, commands.CommandNotFound):
         await ctx.send("명령어를 찾지 못했습니다.")
+        print("on_command_error")
 
 bot.run("ODcyMzgzMzQ5NDkzMjIzNDM0.YQpETg.cFNtAX-7wywqvH3mzY69Rr8l_PE")
