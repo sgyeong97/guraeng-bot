@@ -23,7 +23,6 @@ def get_prefix(bot, message):
     
 bot = commands.Bot(command_prefix = get_prefix)
 
-
 @tasks.loop(seconds=30)
 async def status_start():
     await bot.change_presence(activity=discord.Game(next(work)))
@@ -57,7 +56,44 @@ async def notice(ctx):
     embed.set_thumbnail(url=guild_icon)
     embed.set_footer(text="위에 있는 서버 이름을 누르면 연결됩니다.\n자세한 내용은 서버 규칙 채널 확인 해주세요!")
     await ctx.send(embed=embed)
-    
+
+@bot.command()
+async def chat(ctx):
+    print("send channel chat")
+    content = ctx.message.content
+    nick = ctx.author.nick
+    empty = content.split('/')
+    #기본 채널 Chat에 만 보냄
+    await ctx.send("해당 명령어는 하루에 한번으로 사용을 제한합니다.\n어기면 때찌 뛔찌")
+    if len(empty) == 1:
+        channel = bot.get_channel(870286437436768306)
+        text = content.split(' ')[1:]
+        contents = ''
+        for x in text:
+           contents += x+' '
+        print(contents)
+        embed = discord.Embed(description=":star2: {} ".format(contents), color=0xeeff4f)
+        embed.set_author(name=nick)
+        await channel.send(embed=embed)
+    elif len(empty) >= 2:
+        empty = content.split('/')
+        empty2 = empty[0].split(' ')[1]
+        channel_id = int(empty2)
+        text = empty[1:]
+        contents = ''
+        for x in text:
+            contents += x+' '
+        print(channel_id, text)
+        channel = bot.get_channel(channel_id)
+        embed = discord.Embed(description=":star2: {}".format(contents), color=0xeeff4f)
+        embed.set_author(name=nick)
+        await channel.send(embed=embed)
+    else:
+        print("오류발생")
+        channel = bot.get_channel(870286437436768306)
+        await channel.send("사용자 {} ```{}```\nChat명령어 사용에 알 수 없는 오류 발생".format(nick, content))
+        await ctx.send("오류발생 명령어 확인 또는 Guraeng 에게 문의")
+
 @bot.command(aliases=["hi"])
 async def hello(ctx):
     print("say hello")
