@@ -61,7 +61,10 @@ async def notice(ctx):
 async def chat(ctx):
     print("send channel chat")
     content = ctx.message.content
-    nick = ctx.author.nick
+    if ctx.author.nick == None:
+        nick = ctx.author.name
+    else:
+        nick = ctx.author.nick
     empty = content.split('/')
     #기본 채널 Chat에 만 보냄
     await ctx.send("해당 명령어는 하루에 한번으로 사용을 제한합니다.\n어기면 때찌 뛔찌")
