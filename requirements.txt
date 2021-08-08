@@ -4,3 +4,4 @@ discord==1.7.3
 discord.py==1.7.3
 openpyxl==3.0.7
 youtube-dl==2021.6.6
+pynacl
