@@ -42,7 +42,17 @@ async def on_voice_state_update(member, before, after):
     if before.channel is None and after.channel is notNone:
         channel = bot.get_channel(873835633385279518)
         await channel.send("{} 보이스 채널에 접속했습니다.".format(member.name))
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.CommandNotFound):
+        await ctx.send("명령어를 찾지 못했습니다.")
+        print("on_command_error")
         
+@bot.command(aliases=["hi","안녕","반가워"])
+async def hello(ctx):
+    print("say hello")
+    await ctx.send("hello")
+
 @bot.command(aliases=["down"])
 async def sleep(ctx):
     print("command_sleep")
@@ -63,6 +73,26 @@ async def notice(ctx):
     embed.set_thumbnail(url=guild_icon)
     embed.set_footer(text="위에 있는 서버 이름을 누르면 연결됩니다.\n자세한 내용은 서버 규칙 채널 확인 해주세요!")
     await ctx.send(embed=embed)
+
+@bot.command()
+async def clear(ctx, number:int=None):
+    if ctx.guild:
+        if ctx.message.author.guild_permissions.manage_message:
+            try:
+                if number is None:
+                    await ctx.send("얼마나 지울거야? 숫자를 입력해")
+                elif 101 < number:
+                    await ctx.message.delete()
+                    await ctx.send(f'{ctx.message.author.mention} 100 이하로 입력해줘', delete_after=5) 
+                else:
+                    deleted = await ctx.message.channel.purge(limit=number)
+                    await ctx.send (f'{ctx.message.author.metion}에 의해 `{len(deleted)}`개의 메세지가 삭제되었다!')
+            except:
+                await ctx.send("메세지 삭제 불가.")
+        else:
+            await ctx.send("명령을 수행할 권한이 없습니다. 봇의 권한을 확인해주세요.")
+    else:
+        await ctx.send("DM에서 불가한 명령어")
 
 @bot.command()
 async def chat(ctx):
@@ -104,11 +134,6 @@ async def chat(ctx):
         await channel.send("사용자 {} ```{}```\nChat명령어 사용에 알 수 없는 오류 발생".format(nick, content))
         await ctx.send("오류발생 명령어 확인 또는 Guraeng 에게 문의")
 
-
-@bot.command(aliases=["hi"])
-async def hello(ctx):
-    print("say hello")
-    await ctx.send("hello")
 
 #명령어 접두사 변경
 @bot.command(name="repre")
@@ -178,11 +203,5 @@ async def dice(ctx):
     await ctx.send("주사위를 굴립니다.")
     await ctx.send(dice())
     print("dice roll")
-
-@bot.event
-async def on_command_error(ctx, error):
-    if isinstance(error, commands.CommandNotFound):
-        await ctx.send("명령어를 찾지 못했습니다.")
-        print("on_command_error")
 
 bot.run("ODcyMzgzMzQ5NDkzMjIzNDM0.YQpETg.cFNtAX-7wywqvH3mzY69Rr8l_PE")
