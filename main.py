@@ -37,6 +37,12 @@ async def on_ready():
     print("Guraeng-bot run")
     print("Ready")
 
+@bot.event
+async def on_voice_state_update(member, before, after):
+    if before.channel is None and after.channel is notNone:
+        channel = bot.get_channel(873835633385279518)
+        await channel.send("{} 보이스 채널에 접속했습니다.".format(member.name))
+        
 @bot.command(aliases=["down"])
 async def sleep(ctx):
     print("command_sleep")
@@ -46,6 +52,7 @@ async def sleep(ctx):
 async def getup(ctx):
     print("command_getup")
     status_start.start()
+
 @bot.command(aliases=["규칙"])
 async def notice(ctx):
     print("send server notice url")
@@ -96,6 +103,7 @@ async def chat(ctx):
         channel = bot.get_channel(870286437436768306)
         await channel.send("사용자 {} ```{}```\nChat명령어 사용에 알 수 없는 오류 발생".format(nick, content))
         await ctx.send("오류발생 명령어 확인 또는 Guraeng 에게 문의")
+
 
 @bot.command(aliases=["hi"])
 async def hello(ctx):
