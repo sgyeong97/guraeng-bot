@@ -153,13 +153,24 @@ async def change_prefix(ctx):
 @bot.command()
 async def join(ctx):
     print("voice channel join")
-    channel=ctx.author.voice.channel
+    channel = ctx.author.voice.channel
     await channel.connect()
 
 @bot.command()
 async def leave(ctx):
     print("voice channel leave")
     await ctx.voice_client.disconnect()
+
+@bot.command(aliases=["이리와","와"])
+async def come_on(ctx):
+    channel = ctx.author.voice.channel
+    if ctx.author.nick == None:
+        nick = ctx.author.name
+    else:
+        nick = ctx.author.nick
+    if channel:
+        await ctx.send("{}가 봇을 옮김".format(nick))
+        await ctx.voice_client.move_to(ctx.author.voice.channel)
 
 @bot.command()
 async def dice(ctx):
