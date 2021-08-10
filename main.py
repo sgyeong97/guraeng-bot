@@ -78,7 +78,7 @@ async def clear(ctx, number:int=None):
                     await ctx.send("얼마나 지울거야? 숫자를 입력해")
                 elif 101 < number:
                     await ctx.message.delete()
-                    await ctx.send(f'{ctx.message.author.mention} 50 이하로 입력해줘', delete_after=5) 
+                    await ctx.send(f'{ctx.message.author.mention} 100개 이하로 입력해줘', delete_after=5) 
                 else:
                     deleted = await ctx.message.channel.purge(limit=number)
                     await ctx.send (f'{ctx.message.author.metion}에 의해 `{len(deleted)}`개의 메세지가 삭제되었다!')
