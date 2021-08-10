@@ -73,17 +73,14 @@ async def notice(ctx):
 async def clear(ctx, number:int=None):
     if ctx.guild:
         if ctx.message.author.guild_permissions.manage_messages:
-            try:
-                if number is None:
-                    await ctx.send("얼마나 지울거야? 숫자를 입력해")
-                elif 101 < number:
-                    await ctx.message.delete()
-                    await ctx.send(f'{ctx.message.author.mention} 100개 이하로 입력해줘', delete_after=5) 
-                else:
-                    deleted = await ctx.message.channel.purge(limit=number)
-                    await ctx.send (f'{ctx.message.author.metion}에 의해 `{len(deleted)}`개의 메세지가 삭제되었다!')
-            except:
-                await ctx.send("메세지는 100개 이하로만 지울 수 있습니다.")
+            if number is None:
+                await ctx.send("얼마나 지울거야? 숫자를 입력해")
+            elif 101 < number:
+                await ctx.message.delete()
+                await ctx.send(f'{ctx.message.author.mention} 100개 이하로 입력해줘', delete_after=5) 
+            else:
+                deleted = await ctx.message.channel.purge(limit=number)
+                await ctx.send (f'{ctx.message.author.metion}에 의해 `{len(deleted)}`개의 메세지가 삭제되었다!')
         else:
             await ctx.send("명령을 수행할 권한이 없습니다. 봇의 권한을 확인해주세요.")
     else:
