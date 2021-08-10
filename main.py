@@ -42,12 +42,7 @@ async def on_voice_state_update(member, before, after):
     if before.channel is None and after.channel is notNone:
         channel = bot.get_channel(873835633385279518)
         await channel.send("{} 보이스 채널에 접속했습니다.".format(member.name))
-@bot.event
-async def on_command_error(ctx, error):
-    if isinstance(error, commands.CommandNotFound):
-        await ctx.send("명령어를 찾지 못했습니다.")
-        print("on_command_error")
-        
+       
 @bot.command(aliases=["hi","안녕","반가워"])
 async def hello(ctx):
     print("say hello")
